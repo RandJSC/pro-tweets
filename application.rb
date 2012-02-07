@@ -26,6 +26,12 @@ class ProTweets < Sinatra::Application
   get "/ping" do
     "PONG"
   end
+
+  get "/rate_limit" do
+    rls = Twitter.rate_limit_status
+    content_type 'application/json'
+    rls.attrs.to_json
+  end
 end
 
 # vim: set ft=ruby ts=2 sw=2 expandtab :
