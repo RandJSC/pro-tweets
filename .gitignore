@@ -5,3 +5,4 @@ _notes/
 tmp/
 log/
 .rvmrc
+db/*

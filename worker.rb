@@ -36,11 +36,15 @@ class Worker < Thor
 
 		def open_database
 			DataMapper::Logger.new(STDOUT, :debug)
-			DataMapper.setup(:default, @config.database)
+			DataMapper.setup(:default, {
+				adapter: 'sqlite',
+				database: @config.database
+			})
 			Dir.glob(File.join(File.dirname(__FILE__), 'models', '*.rb')).each do |model|
 				require model
 			end
 			DataMapper.finalize
+			DataMapper.auto_upgrade!
 		end
 end
 
