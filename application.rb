@@ -7,13 +7,20 @@ require "yaml"
 class ProTweets < Sinatra::Application
 
   configure do
-    Config = Hashie::Mash.new(YAML.load_file(File.join(File.dirname(__FILE__), 'config.yml')))
+    @config = Hashie::Mash.new(YAML.load_file(File.join(File.dirname(__FILE__), 'config.yml')))
 
     Twitter.configure do |conf|
-      conf.consumer_key       = Config.twitter.consumer_key
-      conf.consumer_secret    = Config.twitter.consumer_secret
-      conf.oauth_token        = Config.twitter.oauth_token
-      conf.oauth_token_secret = Config.twitter.oauth_token_secret
+      conf.consumer_key       = @config.twitter.consumer_key
+      conf.consumer_secret    = @config.twitter.consumer_secret
+      conf.oauth_token        = @config.twitter.oauth_token
+      conf.oauth_token_secret = @config.twitter.oauth_token_secret
+    end
+
+    # Setup DataMapper and Require Models
+    DataMapper.setup(@config.database)
+
+    Dir.glob(File.join(File.dirname(__FILE__), 'models', '*.rb')).each do |model|
+      require model
     end
   end
 
