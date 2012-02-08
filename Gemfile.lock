@@ -16,6 +16,8 @@ GEM
     rack (1.4.1)
     rack-protection (1.2.0)
       rack
+    rufus-scheduler (2.0.16)
+      tzinfo (>= 0.3.23)
     simple_oauth (0.1.5)
     sinatra (1.3.2)
       rack (~> 1.3, >= 1.3.6)
@@ -27,11 +29,13 @@ GEM
       faraday (~> 0.7)
       multi_json (~> 1.0)
       simple_oauth (~> 0.1)
+    tzinfo (0.3.31)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   hashie
+  rufus-scheduler
   sinatra
   twitter
