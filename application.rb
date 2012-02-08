@@ -27,9 +27,8 @@ class ProTweets < Sinatra::Application
       require model
     end
 
-    # Commit and migrate models
+    # Commit models. Migrations get run from the worker script.
     DataMapper.finalize
-    DataMapper.auto_upgrade!
   end
 
   get "/" do

@@ -20,6 +20,20 @@ class Worker < Thor
 		open_database
 	end
 
+	desc 'migrate_database', 'Run automatic migrations on database. DELETES ALL DATA'
+	def migrate_database
+		load_config
+		open_database
+		DataMapper.auto_migrate!
+	end
+
+	desc 'upgrade_database', 'Run automatic database upgrades. Does not alter data'
+	def upgrade_database
+		load_config
+		open_database
+		DataMapper.auto_upgrade!
+	end
+
 	private
 		def load_config
 			@config = Hashie::Mash.new(YAML.load_file(File.join(File.dirname(__FILE__), 'config.yml')))
@@ -44,7 +58,6 @@ class Worker < Thor
 				require model
 			end
 			DataMapper.finalize
-			DataMapper.auto_upgrade!
 		end
 end
 
