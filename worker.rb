@@ -18,6 +18,21 @@ class Worker < Thor
 		load_config
 		configure_twitter_client
 		open_database
+		tweets = Twitter.search(@config.twitter.search_query)
+
+		tweets.each do |tweet|
+			existing = Tweet.first(:tweet_id => tweet.id.to_s)
+			next if existing
+
+			# TODO: Add more tweet attributes to this
+			new_tweet = Tweet.create(
+				:tweet_id       => tweet.id.to_s,
+				:from_user      => tweet.from_user,
+				:from_user_name => tweet.from_user_name,
+				:text           => tweet.text,
+				:to_user        => tweet.to_user
+			)
+		end
 	end
 
 	desc 'migrate_database', 'Run automatic migrations on database. DELETES ALL DATA'
