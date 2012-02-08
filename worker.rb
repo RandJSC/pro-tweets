@@ -35,10 +35,12 @@ class Worker < Thor
 		end
 
 		def open_database
-			DataMapper.setup(@config.database)
+			DataMapper::Logger.new(STDOUT, :debug)
+			DataMapper.setup(:default, @config.database)
 			Dir.glob(File.join(File.dirname(__FILE__), 'models', '*.rb')).each do |model|
 				require model
 			end
+			DataMapper.finalize
 		end
 end
 

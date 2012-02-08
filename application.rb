@@ -17,11 +17,15 @@ class ProTweets < Sinatra::Application
     end
 
     # Setup DataMapper and Require Models
-    DataMapper.setup(@config.database)
+    DataMapper::Logger.new($stdout, :info)
+    DataMapper.setup(:default, @config.database)
 
     Dir.glob(File.join(File.dirname(__FILE__), 'models', '*.rb')).each do |model|
       require model
     end
+
+    # Commit and migrate models
+    DataMapper.finalize
   end
 
   get "/" do
