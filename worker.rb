@@ -16,11 +16,11 @@ class Worker < Thor
 
 	desc 'fetch_tweets', 'Fetches tweets from the Twitter search API into the database'
 	method_option :query, :type => :string, :default => "#protip", :required => false
-	def fetch_tweets(number=100)
+	def fetch_tweets(number=50)
 		load_config
 		configure_twitter_client
 		open_database
-		tweets = Twitter.search(@config.twitter.search_query, :lang => 'en')
+		tweets = Twitter.search(@config.twitter.search_query, :lang => 'en', :rpp => number)
 		errors = []
 
 		tweets.each do |tweet|
