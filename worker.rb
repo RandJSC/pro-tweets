@@ -12,26 +12,43 @@ Bundler.require :utility, :worker
 
 class Worker < Thor
 
+	include Thor::Actions
+
 	desc 'fetch_tweets', 'Fetches tweets from the Twitter search API into the database'
 	method_option :query, :type => :string, :default => "#protip", :required => false
-	def fetch_tweets
+	def fetch_tweets(number=100)
 		load_config
 		configure_twitter_client
 		open_database
-		tweets = Twitter.search(@config.twitter.search_query)
+		tweets = Twitter.search(@config.twitter.search_query, :lang => 'en')
+		errors = []
 
 		tweets.each do |tweet|
 			existing = Tweet.first(:tweet_id => tweet.id.to_s)
-			next if existing
 
-			# TODO: Add more tweet attributes to this
-			new_tweet = Tweet.create(
-				:tweet_id       => tweet.id.to_s,
-				:from_user      => tweet.from_user,
-				:from_user_name => tweet.from_user_name,
-				:text           => tweet.text,
-				:to_user        => tweet.to_user
+			if existing
+				say_status 'skip', 'Skipping existing tweet'
+				next
+			end
+
+			new_tweet = Tweet.new(
+				:created_at        => tweet.created_at,
+				:tweet_id          => tweet.id.to_s,
+				:from_user         => tweet.from_user,
+				:from_user_name    => tweet.from_user_name,
+				:from_user_id      => tweet.from_user_id.to_s,
+				:profile_image_url => tweet.profile_image_url,
+				:text              => tweet.text,
+				:to_user           => tweet.to_user,
+				:to_user_name      => tweet.to_user_name,
+				:to_user_id        => tweet.to_user_id.to_s
 			)
+
+			if new_tweet.save
+				say_status 'saved', "Tweet from @#{tweet.from_user}: #{tweet.text}", :green
+			else
+				say_status 'error', "Error saving tweet from @#{tweet.from_user}", :red
+			end
 		end
 	end
 
@@ -64,7 +81,7 @@ class Worker < Thor
 		end
 
 		def open_database
-			DataMapper::Logger.new(STDOUT, :debug)
+			DataMapper::Logger.new(STDOUT, :info)
 			DataMapper.setup(:default, {
 				adapter: 'sqlite',
 				database: @config.database
