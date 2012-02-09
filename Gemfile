@@ -5,6 +5,8 @@ group :utility do
 	gem "hashie"
 	gem "dm-sqlite-adapter"
 	gem "data_mapper"
+	gem "haml"
+	gem "sass"
 end
 
 group :app do

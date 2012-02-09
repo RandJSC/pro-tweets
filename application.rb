@@ -32,9 +32,16 @@ class ProTweets < Sinatra::Application
   end
 
   get "/" do
-    content_type 'text/plain'
-    @tips = Twitter.search("#protip")
-    @tips.shuffle.first.attrs['text']
+    @tweets = Tweet.all(:order => [:created_at.desc], :limit => 20)
+
+    haml :index
+  end
+
+  get "/tweets/:id.json" do
+    @tweet = Tweet.find(:tweet_id => params[:id])
+    
+    content_type 'application/json'
+    @tweet.to_json
   end
 
   get "/ping" do

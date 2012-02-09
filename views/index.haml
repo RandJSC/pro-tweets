@@ -1,0 +1,4 @@
+%ul.tweets
+  - @tweets.each do |tweet|
+    %li
+      @#{tweet.from_user}: #{tweet.text}
