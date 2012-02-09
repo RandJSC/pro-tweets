@@ -2,6 +2,16 @@
 
 _Words of Wisdom from the Twitter-verse_
 
+## Why?
+
+We here at Fifth Room Creative decided that the world needed easy access to the words of collective wisdom that pass through Twitter on a daily basis. We're using this as an opportunity to learn about one another's talents, explore new ways of building sites, and have a good time on a Friday.
+
+## How It Works
+
+ProTweets is comprised of 2 scripts: a background worker and a Sinatra web application. The background worker runs as a Cron job and fetches new tweets into the database (SQLite by default), while the web app takes care of displaying them.
+
+The database is handled by DataMapper, which is something that Mike's been wanting to try for a while now, and the frontend code will be handled by Twitter's Bootstrap (which Steve wanted to try).
+
 
 ## License
 
