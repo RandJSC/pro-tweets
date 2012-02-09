@@ -6,3 +6,4 @@ tmp/
 log/
 .rvmrc
 db/*
+config.yml
