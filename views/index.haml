@@ -1,5 +1,5 @@
 %ul.tweets
   - @tweets.each do |tweet|
     %li
-      %img{src: tweet.profile_image_url}
+      %img{src: bigger_image(tweet.profile_image_url)}
       @#{tweet.from_user}: #{tweet.text}

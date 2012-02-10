@@ -31,6 +31,13 @@ class ProTweets < Sinatra::Application
     DataMapper.finalize
   end
 
+  helpers do
+    # Get bigger user icons w/o using API requests
+    def bigger_image(url)
+      url.gsub!(/normal/, 'bigger')
+    end
+  end
+
   get "/" do
     @page = params[:page].to_i if params[:page]
 
