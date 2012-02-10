@@ -51,11 +51,16 @@ class ProTweets < Sinatra::Application
     haml :index
   end
 
-  get "/tweets/:id.json" do
-    @tweet = Tweet.find(:tweet_id => params[:id])
+  get "/tweets/:id.:format" do
+    @tweet = Tweet.first(:tweet_id => params[:id])
     
-    content_type 'application/json'
-    @tweet.to_json
+
+    if params[:format] == "json"
+      content_type 'application/json'
+      @tweet.to_json
+    else
+      haml :tweet
+    end
   end
 
   get "/ping" do
