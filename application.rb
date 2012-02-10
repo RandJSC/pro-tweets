@@ -39,12 +39,13 @@ class ProTweets < Sinatra::Application
   end
 
   get "/" do
+    tpp = @config.tweets_per_page
     @page = params[:page].to_i if params[:page]
 
     if @page
-      @tweets = Tweet.all(:order => [:created_at.desc], :limit => 50, :offset => (50*params[:page].to_i))
+      @tweets = Tweet.all(:order => [:created_at.desc], :limit => tpp, :offset => (tpp*params[:page].to_i))
     else
-      @tweets = Tweet.all(:order => [:created_at.desc], :limit => 50)
+      @tweets = Tweet.all(:order => [:created_at.desc], :limit => tpp)
     end
 
     haml :index
