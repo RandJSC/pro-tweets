@@ -54,7 +54,12 @@ class Worker < Thor
 
 	desc 'remove_old_tweets [AGE_IN_DAYS]', 'Deletes old tweets from the database'
 	def remove_old_tweets(age=7)
+		time = Time.now - (86400*age)
+		tweets = Tweet.all(:created_at.lt => time)
 
+		tweets.each do |tweet|
+
+		end
 	end
 
 	desc 'migrate_database', 'Run automatic migrations on database. DELETES ALL DATA'
