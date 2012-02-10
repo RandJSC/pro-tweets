@@ -7,6 +7,7 @@ group :utility do
 	gem "data_mapper"
 	gem "haml"
 	gem "sass"
+	gem "unicorn"
 end
 
 group :app do
