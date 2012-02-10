@@ -7,7 +7,7 @@ require "yaml"
 class ProTweets < Sinatra::Application
 
   configure do
-    @config = Hashie::Mash.new(YAML.load_file(File.join(File.dirname(__FILE__), 'config.yml')))
+    @config = Hashie::Mash.new(YAML.load_file(File.join(File.dirname(__FILE__), 'config', 'config.yml')))
 
     Twitter.configure do |conf|
       conf.consumer_key       = @config.twitter.consumer_key

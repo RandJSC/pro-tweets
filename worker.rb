@@ -68,7 +68,7 @@ class Worker < Thor
 
 	private
 		def load_config
-			@config = Hashie::Mash.new(YAML.load_file(File.join(File.dirname(__FILE__), 'config.yml')))
+			@config = Hashie::Mash.new(YAML.load_file(File.join(File.dirname(__FILE__), 'config', 'config.yml')))
 		end
 
 		def configure_twitter_client
