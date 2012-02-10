@@ -39,7 +39,7 @@ class ProTweets < Sinatra::Application
   end
 
   get "/" do
-    tpp = @config.tweets_per_page
+    tpp = 200
     @page = params[:page].to_i if params[:page]
 
     if @page
