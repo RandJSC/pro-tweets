@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+#!/usr/bin/ruby-rvm-env 1.9.2@pro-tweets
 #
 # = Pro Tweets Background Worker Script
 #
