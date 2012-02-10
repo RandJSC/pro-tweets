@@ -2,4 +2,5 @@
   - @tweets.each do |tweet|
     %li
       %img{src: bigger_image(tweet.profile_image_url)}
-      @#{tweet.from_user}: #{tweet.text}
+      .tweet-text
+        @#{tweet.from_user}: #{tweet.text}

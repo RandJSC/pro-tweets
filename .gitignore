@@ -7,3 +7,4 @@ log/
 .rvmrc
 db/*
 config.yml
+.sass-cache

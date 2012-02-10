@@ -66,6 +66,12 @@ class ProTweets < Sinatra::Application
     content_type 'application/json'
     rls.attrs.to_json
   end
+
+  get "/stylesheets/screen.css" do
+    content_type 'text/css'
+    sass :screen
+  end
+
 end
 
 # vim: set ft=ruby ts=2 sw=2 expandtab :
