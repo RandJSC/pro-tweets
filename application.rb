@@ -33,7 +33,7 @@ class ProTweets < Sinatra::Application
 
   get "/" do
     if params[:page]
-      @tweets = Tweet.all(:order => [:created_at.desc], :limit => 50, :offset => (50*params[:page]))
+      @tweets = Tweet.all(:order => [:created_at.desc], :limit => 50, :offset => (50*params[:page].to_i))
     else
       @tweets = Tweet.all(:order => [:created_at.desc], :limit => 50)
     end
