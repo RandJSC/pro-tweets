@@ -68,9 +68,9 @@ class ProTweets < Sinatra::Application
     rls.attrs.to_json
   end
 
-  get "/stylesheets/screen.css" do
+  get "/stylesheets/:sheet.css" do
     content_type 'text/css'
-    sass :screen
+    sass "stylesheets/#{params[:sheet]}".to_sym
   end
 
 end
