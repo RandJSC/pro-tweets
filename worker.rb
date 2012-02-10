@@ -59,7 +59,8 @@ class Worker < Thor
 		tweets = Tweet.all(:created_at.lt => time)
 
 		tweets.each do |tweet|
-
+      say_status 'destroy', "Deleted Tweet #{tweet.text}"
+      tweet.destroy
 		end
 	end
 
