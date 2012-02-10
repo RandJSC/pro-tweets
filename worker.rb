@@ -52,6 +52,11 @@ class Worker < Thor
 		end
 	end
 
+	desc 'remove_old_tweets [AGE_IN_DAYS]', 'Deletes old tweets from the database'
+	def remove_old_tweets(age=7)
+
+	end
+
 	desc 'migrate_database', 'Run automatic migrations on database. DELETES ALL DATA'
 	def migrate_database
 		load_config
