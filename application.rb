@@ -2,6 +2,8 @@ require "rubygems"
 require "sinatra"
 require "twitter"
 require "hashie"
+require "haml"
+require "coffee-script"
 require "yaml"
 
 class ProTweets < Sinatra::Application
@@ -90,6 +92,14 @@ class ProTweets < Sinatra::Application
     last_modified lastmod
     content_type 'text/css'
     scss "stylesheets/#{params[:sheet]}".to_sym
+  end
+
+  get '/coffeescripts/:script.js' do
+    lastmod = File.mtime(File.join(settings.views, "coffeescripts", "#{params[:script]}.coffee"))
+    cache_control 86400
+    last_modified lastmod
+    content_type 'text/javascript'
+    coffee "coffeescripts/#{params[:script]}".to_sym
   end
 
   private

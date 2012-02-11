@@ -8,6 +8,7 @@ group :utility do
 	gem "haml"
 	gem "sass"
 	gem "unicorn"
+	gem "coffee-script"
 end
 
 group :app do
