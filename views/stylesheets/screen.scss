@@ -1,0 +1,14 @@
+body {
+  font-family: Arial, Helvetica, sans-serif; }
+
+ul.tweets {
+  padding: {
+    left: 0; };
+  list-style: none;
+  text-indent: 0;
+  li {
+    float: left;
+    .tweet-text {
+      display: none; } } }
+
+// vim: set ts=2 sw=2 expandtab :

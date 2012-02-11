@@ -42,6 +42,10 @@ class ProTweets < Sinatra::Application
     tpp = 200
     @page = params[:page].to_i if params[:page]
 
+    # Don't hit the database as hard if nothing's changed
+    @most_recent = Tweet.first(:order => [:created_at.desc])
+    last_modified @most_recent.created_at
+
     if @page
       @tweets = Tweet.all(:order => [:created_at.desc], :limit => tpp, :offset => (tpp*params[:page].to_i))
     else
@@ -55,7 +59,8 @@ class ProTweets < Sinatra::Application
     get path do
       @tweet = Tweet.first(:tweet_id => params[:id])
       @format = params[:format] || "html"
-      
+
+      last_modified @tweet.created_at
 
       if @format == "json"
         content_type 'application/json'
@@ -77,8 +82,10 @@ class ProTweets < Sinatra::Application
   end
 
   get "/stylesheets/:sheet.css" do
+    lastmod = File.mtime(File.join(settings.views, "stylesheets", "#{params[:sheet]}.scss"))
+    last_modified lastmod
     content_type 'text/css'
-    sass "stylesheets/#{params[:sheet]}".to_sym
+    scss "stylesheets/#{params[:sheet]}".to_sym
   end
 
 end
