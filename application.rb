@@ -42,6 +42,8 @@ class ProTweets < Sinatra::Application
     tpp = 200
     @page = params[:page].to_i if params[:page]
 
+    cache_control 1800 # Cache locally for 30 minutes
+
     # Don't hit the database as hard if nothing's changed
     @most_recent = Tweet.first(:order => [:created_at.desc])
     last_modified @most_recent.created_at
@@ -60,6 +62,7 @@ class ProTweets < Sinatra::Application
       @tweet = Tweet.first(:tweet_id => params[:id])
       @format = params[:format] || "html"
 
+      cache_control 86400
       last_modified @tweet.created_at
 
       if @format == "json"
@@ -83,10 +86,16 @@ class ProTweets < Sinatra::Application
 
   get "/stylesheets/:sheet.css" do
     lastmod = File.mtime(File.join(settings.views, "stylesheets", "#{params[:sheet]}.scss"))
+    cache_control 86400 # Cache locally 24 hours
     last_modified lastmod
     content_type 'text/css'
     scss "stylesheets/#{params[:sheet]}".to_sym
   end
+
+  private
+    def cache_control(seconds)
+      headers 'Cache-Control' => "public,must-revalidate,max-age=#{seconds}"
+    end
 
 end
 
