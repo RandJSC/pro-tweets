@@ -3,12 +3,20 @@ body {
 
 ul.tweets {
   padding: {
-    left: 0; };
+    left: 0;
+  };
   list-style: none;
   text-indent: 0;
+
   li {
     float: left;
+    width: 73px;
+    height: 73px;
+    padding: 10px;
     .tweet-text {
-      display: none; } } }
+      display: none; 
+    }
+  }
+}
 
 // vim: set ts=2 sw=2 expandtab :
