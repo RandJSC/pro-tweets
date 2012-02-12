@@ -5,14 +5,14 @@ group :utility do
 	gem "hashie"
 	gem "dm-sqlite-adapter"
 	gem "data_mapper"
-	gem "haml"
-	gem "sass"
 	gem "unicorn"
-	gem "coffee-script"
 end
 
 group :app do
 	gem "sinatra"
+	gem "coffee-script"
+	gem "haml"
+	gem "sass"
 end
 
 group :worker do
