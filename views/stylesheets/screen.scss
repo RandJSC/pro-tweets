@@ -1,3 +1,15 @@
+$font-color: #4d4d4d;
+$body-bg: #fff;
+
+// Mixins
+@mixin border-radius($px) {
+  border-radius: $px;
+  -webkit-border-radius: $px;
+  -moz-border-radius: $px;
+  -ms-border-radius: $px;
+  -o-border-radius: $px;
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif; }
 
@@ -13,8 +25,18 @@ ul.tweets {
     width: 73px;
     height: 73px;
     padding: 10px;
+    position: relative;
+
     .tweet-text {
+      @include border-radius(4px);
       display: none; 
+      position: absolute;
+      background: white;
+      border: solid 1px #666;
+      top: 73px;
+      z-index: 100;
+      width: 230px;
+      padding: 10px;
     }
   }
 }
