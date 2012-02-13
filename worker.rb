@@ -15,7 +15,7 @@ class Worker < Thor
 	include Thor::Actions
 
 	desc 'fetch_tweets [NUM_TWEETS]', 'Fetches tweets from the Twitter search API into the database'
-	method_option :query, :type => :string, :default => "#protip", :required => false
+	method_option :query, :type => :string, :default => "#protip", :required => false, :aliases => %w(-q)
 	method_option :page, :aliases => %w(-p), :default => 1, :required => false
 	method_option :retweet, :type => :boolean, :default => false, :required => false, :aliases => %w(-r)
 	def fetch_tweets(number=50)
