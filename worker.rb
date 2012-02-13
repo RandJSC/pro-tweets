@@ -17,6 +17,7 @@ class Worker < Thor
 	desc 'fetch_tweets [NUM_TWEETS]', 'Fetches tweets from the Twitter search API into the database'
 	method_option :query, :type => :string, :default => "#protip", :required => false
 	method_option :page, :aliases => %w(-p), :default => 1, :required => false
+	method_option :retweet, :type => :boolean, :default => false, :required => false, :aliases => %w(-r)
 	def fetch_tweets(number=50)
 		load_config
 		configure_twitter_client
@@ -47,6 +48,11 @@ class Worker < Thor
 
 			if new_tweet.save
 				say_status 'saved', "Tweet from @#{tweet.from_user}: #{tweet.text}", :green
+
+				# Retweet if the -r flag was passed
+				if options.retweet
+					Twitter.retweet(tweet.id)
+				end
 			else
 				say_status 'error', "Error saving tweet from @#{tweet.from_user}", :red
 			end
