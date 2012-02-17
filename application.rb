@@ -25,7 +25,7 @@ class ProTweets < Sinatra::Application
       database: @config.database
     })
 
-    Dir.glob(File.join(File.dirname(__FILE__), 'models', '*.rb')).each do |model|
+    Dir.glob(File.join(settings.root, 'models', '*.rb')).each do |model|
       require model
     end
 

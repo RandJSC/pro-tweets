@@ -15,9 +15,8 @@ class Worker < Thor
 	include Thor::Actions
 
 	desc 'fetch_tweets [NUM_TWEETS]', 'Fetches tweets from the Twitter search API into the database'
-	method_option :query, :type => :string, :default => "#protip", :required => false, :aliases => %w(-q)
+	method_option :query, :type => :string, :default => "#protip", :required => false
 	method_option :page, :aliases => %w(-p), :default => 1, :required => false
-	method_option :retweet, :type => :boolean, :default => false, :required => false, :aliases => %w(-r)
 	def fetch_tweets(number=50)
 		load_config
 		configure_twitter_client
@@ -48,11 +47,6 @@ class Worker < Thor
 
 			if new_tweet.save
 				say_status 'saved', "Tweet from @#{tweet.from_user}: #{tweet.text}", :green
-
-				# Retweet if the -r flag was passed
-				if options.retweet
-					Twitter.retweet(tweet.id)
-				end
 			else
 				say_status 'error', "Error saving tweet from @#{tweet.from_user}", :red
 			end
@@ -61,7 +55,9 @@ class Worker < Thor
 
 	desc 'remove_old_tweets [AGE_IN_DAYS]', 'Deletes old tweets from the database'
 	def remove_old_tweets(age=7)
-		time = Time.now - (86400*age)
+    load_config
+    open_database
+		time = Time.now - (86400*age.to_i)
 		tweets = Tweet.all(:created_at.lt => time)
 
 		tweets.each do |tweet|
