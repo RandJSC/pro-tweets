@@ -41,14 +41,12 @@ class ProTweets < Sinatra::Application
   end
 
   get "/" do
+    haml :index
+  end
+
+  get '/tweets.json' do
     tpp = 200
     @page = params[:page].to_i if params[:page]
-
-    cache_control 1800 # Cache locally for 30 minutes
-
-    # Don't hit the database as hard if nothing's changed
-    @most_recent = Tweet.first(:order => [:created_at.desc])
-    last_modified @most_recent.created_at
 
     if @page
       @tweets = Tweet.all(:order => [:created_at.desc], :limit => tpp, :offset => (tpp*params[:page].to_i))
@@ -56,7 +54,8 @@ class ProTweets < Sinatra::Application
       @tweets = Tweet.all(:order => [:created_at.desc], :limit => tpp)
     end
 
-    haml :index
+    content_type 'application/json'
+    @tweets.to_json
   end
 
   [ "/tweets/:id.:format", "/tweets/:id" ].each do |path|
@@ -96,7 +95,7 @@ class ProTweets < Sinatra::Application
 
   get '/coffeescripts/:script.js' do
     lastmod = File.mtime(File.join(settings.views, "coffeescripts", "#{params[:script]}.coffee"))
-    cache_control 86400
+    #cache_control 86400
     last_modified lastmod
     content_type 'text/javascript'
     coffee "coffeescripts/#{params[:script]}".to_sym

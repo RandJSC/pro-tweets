@@ -1,0 +1,31 @@
+window.App = Em.Application.create
+	ready: ->
+		App.tweetsController.loadTweets()
+
+###
+# Models
+###
+App.Tweet = Em.Object.extend
+	id: null
+	created_at: null
+	from_user: null
+	from_user_id: null
+	from_user_name: null
+	to_user: null
+	to_user_id: null
+	to_user_name: null
+	tweet_id: null
+	profile_image_url: null
+	source: null
+	text: null
+
+###
+# Controllers
+###
+App.tweetsController = Em.ArrayController.create
+	content: []
+	loadTweets: ->
+		me = this
+		$.getJSON '/tweets.json', (data) ->
+			tweet = App.Tweet.create(data)
+			me.pushObject tweet

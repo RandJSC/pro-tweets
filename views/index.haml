@@ -1,7 +1,1 @@
 %ul.tweets
-  - @tweets.each do |tweet|
-    %li
-      %a{href: "/tweets/#{tweet.tweet_id}.html"}
-        %img{src: bigger_image(tweet.profile_image_url), width: 73, height: 73}
-        .tweet-text
-          @#{tweet.from_user}: #{tweet.text}
