@@ -8,6 +8,19 @@
 
     = yield
 
+    %script{type: 'text/x-handlebars'}
+      :plain
+        <ul id="tweets">
+            {{#each App.tweetsController}}
+                <li class="tweet">
+                    <img {{bindAttr src="profile_image_url"}} />
+                    <div class="tweet-text">
+                        {{text}}
+                    </div>
+                </li>
+            {{/each}}
+        </ul>
+
     %script{type: 'text/javascript', src: '/javascripts/jquery-1.7.1.min.js'}
     %script{type: 'text/javascript', src: '/javascripts/ember-0.9.8.1.min.js'}
     %script{type: 'text/javascript', src: '/javascripts/jquery.hoverIntent.minified.js'}

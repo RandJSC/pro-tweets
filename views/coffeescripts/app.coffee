@@ -27,5 +27,6 @@ App.tweetsController = Em.ArrayController.create
 	loadTweets: ->
 		me = this
 		$.getJSON '/tweets.json', (data) ->
-			tweet = App.Tweet.create(data)
-			me.pushObject tweet
+			data.forEach (twt) ->
+				tweet = App.Tweet.create(twt)
+				me.pushObject tweet

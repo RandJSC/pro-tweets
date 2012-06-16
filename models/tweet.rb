@@ -13,6 +13,10 @@ class Tweet
 	property :to_user, String, length: 255, index: true
 	property :to_user_id, String, length: 255
 	property :to_user_name, String, length: 255
+
+	def bigger_profile_image_url
+		profile_image_url.gsub!(/normal/, 'bigger')
+	end
 end
 
 # vim: set ft=ruby sw=2 ts=2 :
