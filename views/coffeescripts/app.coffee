@@ -3,6 +3,10 @@ window.App = Em.Application.create
 		App.tweetsController.loadTweets()
 
 ###
+# Routing
+###
+
+###
 # Models
 ###
 App.Tweet = Em.Object.extend
@@ -18,6 +22,9 @@ App.Tweet = Em.Object.extend
 	profile_image_url: null
 	source: null
 	text: null
+	bigger_image_url: (->
+		@.get('profile_image_url').replace(/normal/, 'bigger')
+	).property()
 
 ###
 # Controllers
@@ -30,3 +37,5 @@ App.tweetsController = Em.ArrayController.create
 			data.forEach (twt) ->
 				tweet = App.Tweet.create(twt)
 				me.pushObject tweet
+
+App.tweetController = Em.ObjectController.create()
