@@ -37,5 +37,3 @@ App.tweetsController = Em.ArrayController.create
 			data.forEach (twt) ->
 				tweet = App.Tweet.create(twt)
 				me.pushObject tweet
-
-App.tweetController = Em.ObjectController.create()

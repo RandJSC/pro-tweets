@@ -10,10 +10,10 @@
 
     %script{type: 'text/x-handlebars'}
       :plain
-        <ul id="tweets">
+        <ul class="tweets">
             {{#each App.tweetsController}}
                 <li class="tweet">
-                    <img {{bindAttr src="profile_image_url"}} />
+                    <img {{bindAttr src="bigger_image_url"}} />
                     <div class="tweet-text">
                         {{text}}
                     </div>
