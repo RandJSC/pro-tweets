@@ -4,22 +4,29 @@
     %title Words of Wisdom from the Twitter-Verse
     %link{rel: 'stylesheet', href: '/stylesheets/screen.css', type: 'text/css'}
   %body
-    %h1 ProTweets
+    #container
+      %h1 ProTweets
 
-    = yield
+      = yield
 
-    %script{type: 'text/x-handlebars'}
-      :plain
-        <ul class="tweets">
-            {{#each App.tweetsController}}
-                <li class="tweet">
-                    <img {{bindAttr src="bigger_image_url"}} />
-                    <div class="tweet-text">
-                        {{text}}
-                    </div>
-                </li>
-            {{/each}}
-        </ul>
+      %script{type: 'text/x-handlebars'}
+        :plain
+          <ul class="tweets">
+              <b>{{App.myName}}</b>
+              {{#each App.tweetsController}}
+                  <li class="tweet">
+                      <img {{bindAttr src="bigger_image_url"}} />
+                      <div class="tweet-text">
+                          {{text}}
+                      </div>
+                  </li>
+              {{/each}}
+          </ul>
+      %script{type: 'text/x-handlebars', :'data-template-name' => "tweet"}
+        :plain
+          <div class="tweet">
+              {{text}}
+          </div>
 
     %script{type: 'text/javascript', src: '/javascripts/jquery-1.7.1.min.js'}
     %script{type: 'text/javascript', src: '/javascripts/ember-0.9.8.1.min.js'}
